@@ -1,0 +1,97 @@
+package com.tcs.reto.services.impl;
+
+import com.tcs.reto.dto.ClienteDto;
+import com.tcs.reto.entities.Cliente;
+import com.tcs.reto.repositories.ClienteRepository;
+import com.tcs.reto.services.ClienteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class ClienteServiceImpl implements ClienteService {
+
+    private final ClienteRepository clienteRepository;
+
+    @Override
+    public ClienteDto save(ClienteDto dto) {
+        Cliente cliente = mapToEntity(dto);
+        cliente = clienteRepository.save(cliente);
+        return mapToDto(cliente);
+    }
+
+    @Override
+    public ClienteDto update(Long id, ClienteDto dto) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Cliente con ID " + id + " no encontrado"));
+
+        // Actualizar todos los campos heredados de Persona y propios de Cliente
+        cliente.setNombre(dto.getNombre());
+        cliente.setGenero(dto.getGenero());
+        cliente.setEdad(dto.getEdad());
+        cliente.setIdentificacion(dto.getIdentificacion());
+        cliente.setDireccion(dto.getDireccion());
+        cliente.setTelefono(dto.getTelefono());
+        cliente.setPassword(dto.getPassword());
+        cliente.setEstado(dto.getEstado());
+
+        cliente = clienteRepository.save(cliente);
+        return mapToDto(cliente);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (!clienteRepository.existsById(id)) {
+            throw new NoSuchElementException("Cliente con ID " + id + " no encontrado");
+        }
+        clienteRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ClienteDto> findAll() {
+        return clienteRepository.findAll().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ClienteDto findById(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Cliente con ID " + id + " no encontrado"));
+        return mapToDto(cliente);
+    }
+
+    // Mapper de DTO a entidad
+    private Cliente mapToEntity(ClienteDto dto) {
+        Cliente cliente = new Cliente();
+        cliente.setId(dto.getId());
+        cliente.setNombre(dto.getNombre());
+        cliente.setGenero(dto.getGenero());
+        cliente.setEdad(dto.getEdad());
+        cliente.setIdentificacion(dto.getIdentificacion());
+        cliente.setDireccion(dto.getDireccion());
+        cliente.setTelefono(dto.getTelefono());
+        cliente.setPassword(dto.getPassword());
+        cliente.setEstado(dto.getEstado());
+        return cliente;
+    }
+
+    // Mapper de entidad a DTO
+    private ClienteDto mapToDto(Cliente cliente) {
+        ClienteDto dto = new ClienteDto();
+        dto.setId(cliente.getId());
+        dto.setNombre(cliente.getNombre());
+        dto.setGenero(cliente.getGenero());
+        dto.setEdad(cliente.getEdad());
+        dto.setIdentificacion(cliente.getIdentificacion());
+        dto.setDireccion(cliente.getDireccion());
+        dto.setTelefono(cliente.getTelefono());
+        dto.setPassword(cliente.getPassword());
+        dto.setEstado(cliente.getEstado());
+        return dto;
+    }
+}
