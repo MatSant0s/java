@@ -28,6 +28,12 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         BigDecimal saldoActual = cuenta.getSaldo() != null ? cuenta.getSaldo() : BigDecimal.ZERO;
         BigDecimal valorMovimiento = dto.getValor() != null ? dto.getValor() : BigDecimal.ZERO;
+
+        // Validación de saldo disponible
+        if (valorMovimiento.compareTo(BigDecimal.ZERO) < 0 && saldoActual.add(valorMovimiento).compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Saldo no disponible");
+        }
+
         BigDecimal nuevoSaldo = saldoActual.add(valorMovimiento);
 
         Movimiento movimiento = mapToEntity(dto);
@@ -55,13 +61,11 @@ public class MovimientoServiceImpl implements MovimientoService {
         movimientoExistente.setValor(dto.getValor());
         movimientoExistente.setCuenta(cuenta);
 
-
         if (dto.getSaldo() != null) {
             movimientoExistente.setSaldo(dto.getSaldo());
         }
 
         movimientoExistente = movimientoRepository.save(movimientoExistente);
-
 
         return mapToDto(movimientoExistente);
     }
@@ -87,7 +91,6 @@ public class MovimientoServiceImpl implements MovimientoService {
                 .orElseThrow(() -> new NoSuchElementException("Movimiento con ID " + id + " no encontrado"));
         return mapToDto(movimiento);
     }
-
 
     private Movimiento mapToEntity(MovimientoDto dto) {
         Movimiento movimiento = new Movimiento();
