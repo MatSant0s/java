@@ -2,7 +2,7 @@ package com.tcs.reto.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -24,13 +24,12 @@ public class Movimiento {
     private String tipoMovimiento;
 
     @Column(name = "valor", nullable = false)
-    private Double valor;
+    private BigDecimal valor;  // Cambiado a BigDecimal
 
     @Column(name = "saldo", nullable = false)
-    private Double saldo;
+    private BigDecimal saldo;  // Cambiado a BigDecimal
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id", nullable = false)
-    private Cuenta cuenta;  // Relación con 'cuentas'
+    private Cuenta cuenta;
 }
- 	

@@ -2,6 +2,7 @@ package com.tcs.reto.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cuentas")
@@ -22,12 +23,13 @@ public class Cuenta {
     private String tipoCuenta;
 
     @Column(name = "saldo", nullable = false)
-    private Double saldo;
+    private BigDecimal saldo = BigDecimal.ZERO;  // Cambiado a BigDecimal y valor inicial
 
     @Column(name = "estado", nullable = false)
     private Boolean estado;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;  // Relación con 'clientes'
+    private Cliente cliente;
 }
+

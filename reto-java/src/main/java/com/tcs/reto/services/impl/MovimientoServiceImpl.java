@@ -9,6 +9,7 @@ import com.tcs.reto.services.MovimientoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -22,41 +23,52 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public MovimientoDto save(MovimientoDto dto) {
-        // Obtener la cuenta desde el repositorio usando cuentaId del DTO
         Cuenta cuenta = cuentaRepository.findById(dto.getCuentaId())
                 .orElseThrow(() -> new NoSuchElementException("Cuenta con ID " + dto.getCuentaId() + " no encontrada"));
 
-        // Crear el movimiento y asociar la cuenta
-        Movimiento movimiento = mapToEntity(dto);
-        movimiento.setCuenta(cuenta);  // Asociamos la cuenta al movimiento
+        BigDecimal saldoActual = cuenta.getSaldo() != null ? cuenta.getSaldo() : BigDecimal.ZERO;
+        BigDecimal valorMovimiento = dto.getValor() != null ? dto.getValor() : BigDecimal.ZERO;
+        BigDecimal nuevoSaldo = saldoActual.add(valorMovimiento);
 
-        // Guardar el movimiento
+        Movimiento movimiento = mapToEntity(dto);
+        movimiento.setCuenta(cuenta);
+        movimiento.setSaldo(nuevoSaldo);
+
         movimiento = movimientoRepository.save(movimiento);
+
+        cuenta.setSaldo(nuevoSaldo);
+        cuentaRepository.save(cuenta);
+
         return mapToDto(movimiento);
     }
 
     @Override
     public MovimientoDto update(Long id, MovimientoDto dto) {
-        // Buscar el movimiento existente
-        Movimiento movimiento = movimientoRepository.findById(id)
+        Movimiento movimientoExistente = movimientoRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Movimiento con ID " + id + " no encontrado"));
 
-        // Actualizar los campos del movimiento con los valores del DTO
-        movimiento.setFecha(dto.getFecha());
-        movimiento.setTipoMovimiento(dto.getTipoMovimiento());
-        movimiento.setValor(dto.getValor());
-        movimiento.setSaldo(dto.getSaldo());
+        Cuenta cuenta = cuentaRepository.findById(dto.getCuentaId())
+                .orElseThrow(() -> new NoSuchElementException("Cuenta con ID " + dto.getCuentaId() + " no encontrada"));
 
-        // Actualizar la cuenta asociada si es necesario
-        if (dto.getCuentaId() != null) {
-            Cuenta cuenta = cuentaRepository.findById(dto.getCuentaId())
-                    .orElseThrow(() -> new NoSuchElementException("Cuenta con ID " + dto.getCuentaId() + " no encontrada"));
-            movimiento.setCuenta(cuenta);  // Actualizamos la cuenta asociada
+        // Aquí puedes definir cómo quieres actualizar saldo, por ejemplo, no cambiarlo o recalcular
+        movimientoExistente.setFecha(dto.getFecha());
+        movimientoExistente.setTipoMovimiento(dto.getTipoMovimiento());
+        movimientoExistente.setValor(dto.getValor());
+        movimientoExistente.setCuenta(cuenta);
+
+        // Si quieres actualizar saldo del movimiento, calcula o asigna según lógica
+        // Por ejemplo, solo asignar saldo recibido (asegúrate que tenga sentido)
+        if (dto.getSaldo() != null) {
+            movimientoExistente.setSaldo(dto.getSaldo());
         }
 
-        // Guardar el movimiento actualizado
-        movimiento = movimientoRepository.save(movimiento);
-        return mapToDto(movimiento);  // Retornamos el DTO actualizado
+        movimientoExistente = movimientoRepository.save(movimientoExistente);
+
+        // Opcional: actualizar saldo de la cuenta si la lógica lo requiere
+        // cuenta.setSaldo(...);
+        // cuentaRepository.save(cuenta);
+
+        return mapToDto(movimientoExistente);
     }
 
     @Override
@@ -81,24 +93,18 @@ public class MovimientoServiceImpl implements MovimientoService {
         return mapToDto(movimiento);
     }
 
-    // Mapper de DTO a entidad
+    // Mappers
+
     private Movimiento mapToEntity(MovimientoDto dto) {
         Movimiento movimiento = new Movimiento();
         movimiento.setId(dto.getId());
         movimiento.setFecha(dto.getFecha());
         movimiento.setTipoMovimiento(dto.getTipoMovimiento());
         movimiento.setValor(dto.getValor());
-        movimiento.setSaldo(dto.getSaldo());
-        
-        // Crear la relación con la cuenta
-        Cuenta cuenta = new Cuenta();
-        cuenta.setCuentaId(dto.getCuentaId());  // Asignamos el ID de la cuenta al objeto cuenta
-        movimiento.setCuenta(cuenta);  // Asignamos la cuenta al movimiento
-        
+        // No seteamos saldo aquí porque se calcula en save
         return movimiento;
     }
 
-    // Mapper de entidad a DTO
     private MovimientoDto mapToDto(Movimiento movimiento) {
         MovimientoDto dto = new MovimientoDto();
         dto.setId(movimiento.getId());
@@ -106,8 +112,7 @@ public class MovimientoServiceImpl implements MovimientoService {
         dto.setTipoMovimiento(movimiento.getTipoMovimiento());
         dto.setValor(movimiento.getValor());
         dto.setSaldo(movimiento.getSaldo());
-        // Asignamos el ID de la cuenta en el DTO
-        dto.setCuentaId(movimiento.getCuenta().getCuentaId());
+        dto.setCuentaId(movimiento.getCuenta() != null ? movimiento.getCuenta().getCuentaId() : null);
         return dto;
     }
 }
