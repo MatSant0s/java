@@ -24,10 +24,10 @@ public class Movimiento {
     private String tipoMovimiento;
 
     @Column(name = "valor", nullable = false)
-    private BigDecimal valor;  // Cambiado a BigDecimal
+    private BigDecimal valor;  
 
     @Column(name = "saldo", nullable = false)
-    private BigDecimal saldo;  // Cambiado a BigDecimal
+    private BigDecimal saldo;  
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id", nullable = false)

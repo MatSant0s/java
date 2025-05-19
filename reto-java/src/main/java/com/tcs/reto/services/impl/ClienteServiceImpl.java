@@ -29,7 +29,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Cliente con ID " + id + " no encontrado"));
 
-        // Actualizar todos los campos heredados de Persona y propios de Cliente
+        // Actualizacion Persona y Cliente
         cliente.setNombre(dto.getNombre());
         cliente.setGenero(dto.getGenero());
         cliente.setEdad(dto.getEdad());
@@ -65,7 +65,7 @@ public class ClienteServiceImpl implements ClienteService {
         return mapToDto(cliente);
     }
 
-    // Mapper de DTO a entidad
+    // Maper de DTO a entidad
     private Cliente mapToEntity(ClienteDto dto) {
         Cliente cliente = new Cliente();
         cliente.setId(dto.getId());
@@ -80,7 +80,7 @@ public class ClienteServiceImpl implements ClienteService {
         return cliente;
     }
 
-    // Mapper de entidad a DTO
+    // Maper de entidad a DTO
     private ClienteDto mapToDto(Cliente cliente) {
         ClienteDto dto = new ClienteDto();
         dto.setId(cliente.getId());

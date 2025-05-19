@@ -8,7 +8,7 @@ public class CuentaDto {
     private Long cuentaId;
     private String numeroCuenta;
     private String tipoCuenta;
-    private BigDecimal saldo;  // BigDecimal aquí también
+    private BigDecimal saldo;  
     private Boolean estado;
     private Long clienteId;
 }
