@@ -1,0 +1,119 @@
+{
+  "info": {
+    "name": "Reto Movimientos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get all movimientos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/movimientos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movimientos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get movimiento by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/movimientos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movimientos",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create movimiento",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fecha\": \"2025-05-20\",\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": -100.0,\n  \"cuentaId\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/movimientos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movimientos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update movimiento",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fecha\": \"2025-05-20\",\n  \"tipoMovimiento\": \"DEPOSITO\",\n  \"valor\": 150.0,\n  \"saldo\": 150.0,\n  \"cuentaId\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/movimientos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movimientos",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete movimiento",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/movimientos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movimientos",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
