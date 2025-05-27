@@ -16,4 +16,5 @@ public class Cliente extends Persona {
 
     @Column(nullable = false)
     private Boolean estado;
+    
 }

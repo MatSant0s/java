@@ -33,40 +33,42 @@ CREATE TABLE public.movimientos (
     saldo DECIMAL(15, 2) NOT NULL,
     cuenta_id BIGINT NOT NULL,
     FOREIGN KEY (cuenta_id) REFERENCES public.cuentas(cuenta_id)
-);
+
+
+
 
 INSERT INTO public.personas (nombre, genero, edad, identificacion, direccion, telefono)
 VALUES
-('Juan Pérez', 'Masculino', 30, '123456789', 'Calle Ficticia 123', '987654321'),
-('María Gómez', 'Femenino', 28, '987654321', 'Avenida Real 456', '123456789');
+('Jose Lema', 'Masculino', 30, '1234', 'Otavalo sn y principal', '098254785');
 
+INSERT INTO public.personas (nombre, genero, edad, identificacion, direccion, telefono)
+VALUES
+('Marianela Montalvo', 'Femenino', 28, '5678', 'Amazonas y NNUU', '097548965');
+
+INSERT INTO public.personas (nombre, genero, edad, identificacion, direccion, telefono)
+VALUES
+('Juan Osorio', 'Masculino', 32, '1245', '13 junio y Equinoccial', '098874587');
 
 INSERT INTO public.clientes (id, password, estado)
-VALUES
-(1, 'password123', true),
-(2, 'password456', true);
+SELECT id, '1234', True FROM public.personas WHERE nombre = 'Jose Lema';
 
+INSERT INTO public.clientes (id, password, estado)
+SELECT id, '5678', True FROM public.personas WHERE nombre = 'Marianela Montalvo';
+
+INSERT INTO public.clientes (id, password, estado)
+SELECT id, '1245', True FROM public.personas WHERE nombre = 'Juan Osorio';
 
 INSERT INTO public.cuentas (numero_cuenta, tipo_cuenta, saldo, estado, cliente_id)
 VALUES
-('10000001', 'Ahorros', 1500.00, true, 1),
-('10000002', 'Corriente', 2500.00, true, 2);
-
+('10000001', 'Ahorros', 1500.00, true, 1);
 
 INSERT INTO public.movimientos (fecha, tipo_movimiento, valor, saldo, cuenta_id)
 VALUES
-('2025-05-19', 'Depósito', 500.00, 1500.00, 1),
-('2025-05-20', 'Retiro', 200.00, 1800.00, 2);
+('2025-05-19', 'Depósito', 500.00, 1500.00, 1);
 
-
-INSERT INTO public.movimientos (fecha, tipo_movimiento, valor, saldo, cuenta_id)
-VALUES
-('2025-05-19', 'Depósito', 500.00, 2000.00, 1),
-('2025-05-19', 'Retiro', 300.00, 2200.00, 2);	
-
-select * from movimientos
-select * from cuentas
+   		
+select * from personas
 select * from clientes
-
-
+select * from cuentas
+select * from movimientos
 
