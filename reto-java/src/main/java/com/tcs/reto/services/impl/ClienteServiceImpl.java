@@ -2,10 +2,13 @@ package com.tcs.reto.services.impl;
 
 import com.tcs.reto.dto.ClienteDto;
 import com.tcs.reto.entities.Cliente;
+import com.tcs.reto.entities.Cuenta;
 import com.tcs.reto.repositories.ClienteRepository;
+import com.tcs.reto.repositories.CuentaRepository;
 import com.tcs.reto.services.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final CuentaRepository cuentaRepository;
 
     @Override
     public ClienteDto save(ClienteDto dto) {
@@ -29,7 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Cliente con ID " + id + " no encontrado"));
 
-        // Actualizacion Persona y Cliente
+        // Actualización Persona y Cliente
         cliente.setNombre(dto.getNombre());
         cliente.setGenero(dto.getGenero());
         cliente.setEdad(dto.getEdad());
@@ -44,11 +48,20 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        if (!clienteRepository.existsById(id)) {
-            throw new NoSuchElementException("Cliente con ID " + id + " no encontrado");
+        // Buscar el cliente
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Cliente con ID " + id + " no encontrado"));
+
+        // Obtener y eliminar las cuentas asociadas al cliente
+        List<Cuenta> cuentas = cuentaRepository.findByClienteId(id); // Buscar cuentas por cliente ID
+        for (Cuenta cuenta : cuentas) {
+            cuentaRepository.delete(cuenta); // Eliminar cuenta
         }
-        clienteRepository.deleteById(id);
+
+        // Eliminar el cliente
+        clienteRepository.delete(cliente); 
     }
 
     @Override

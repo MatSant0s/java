@@ -33,7 +33,7 @@ CREATE TABLE public.movimientos (
     saldo DECIMAL(15, 2) NOT NULL,
     cuenta_id BIGINT NOT NULL,
     FOREIGN KEY (cuenta_id) REFERENCES public.cuentas(cuenta_id)
-
+);
 
 
 
@@ -48,6 +48,10 @@ VALUES
 INSERT INTO public.personas (nombre, genero, edad, identificacion, direccion, telefono)
 VALUES
 ('Juan Osorio', 'Masculino', 32, '1245', '13 junio y Equinoccial', '098874587');
+
+INSERT INTO public.personas (nombre, genero, edad, identificacion, direccion, telefono)
+VALUES
+('Mat san', 'Masculino', 22, '1222', '13 junio y Equinoccial', '091174587');
 
 INSERT INTO public.clientes (id, password, estado)
 SELECT id, '1234', True FROM public.personas WHERE nombre = 'Jose Lema';
@@ -66,9 +70,20 @@ INSERT INTO public.movimientos (fecha, tipo_movimiento, valor, saldo, cuenta_id)
 VALUES
 ('2025-05-19', 'Depósito', 500.00, 1500.00, 1);
 
-   		
-select * from personas
-select * from clientes
-select * from cuentas
-select * from movimientos
 
+
+ALTER TABLE public.cuentas
+DROP CONSTRAINT cuentas_cliente_id_fkey;
+
+ALTER TABLE public.cuentas
+ADD CONSTRAINT cuentas_cliente_id_fkey FOREIGN KEY (cliente_id) REFERENCES public.clientes(id) ON DELETE CASCADE;
+
+
+ALTER TABLE public.movimientos
+DROP CONSTRAINT movimientos_cuenta_id_fkey;
+
+ALTER TABLE public.movimientos
+ADD CONSTRAINT movimientos_cuenta_id_fkey FOREIGN KEY (cuenta_id) REFERENCES public.cuentas(cuenta_id) ON DELETE CASCADE;
+
+
+   		

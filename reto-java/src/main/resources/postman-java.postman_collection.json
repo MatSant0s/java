@@ -1,251 +1,115 @@
 {
-  "info": {
-    "name": "Reto Movimientos",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Create Cliente Jose Lema",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nombre\": \"Jose Lema\",\n  \"identificacion\": \"100000001\",\n  \"genero\": \"Masculino\",\n  \"edad\": 35,\n  \"direccion\": \"Otavalo sn y principal\",\n  \"telefono\": \"098254785\",\n  \"password\": \"1234\",\n  \"estado\": true\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/clientes",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "clientes"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Cliente Marianela Montalvo",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nombre\": \"Marianela Montalvo\",\n  \"identificacion\": \"100000002\",\n  \"genero\": \"Femenino\",\n  \"edad\": 29,\n  \"direccion\": \"Amazonas y NNUU\",\n  \"telefono\": \"097548965\",\n  \"password\": \"5678\",\n  \"estado\": true\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/clientes",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "clientes"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Cliente Juan Osorio",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nombre\": \"Juan Osorio\",\n  \"identificacion\": \"100000003\",\n  \"genero\": \"Masculino\",\n  \"edad\": 41,\n  \"direccion\": \"13 junio y Equinoccial\",\n  \"telefono\": \"098874587\",\n  \"password\": \"1245\",\n  \"estado\": true\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/clientes",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "clientes"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Cuenta Ahorro 478758",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoCuenta\": \"Ahorro\",\n  \"saldo\": 200,\n  \"estado\": true,\n  \"clienteId\": 1\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/cuentas",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "cuentas"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Cuenta Corriente 225487",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"numeroCuenta\": \"225487\",\n  \"tipoCuenta\": \"Corriente\",\n  \"saldo\": 100,\n  \"estado\": true,\n  \"clienteId\": 2\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/cuentas",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "cuentas"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Movimiento RETIRO 478758",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fecha\": \"2025-05-20\",\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": -575.0,\n  \"cuentaId\": 478758\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/movimientos",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "movimientos"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Movimiento DEPOSITO 225487",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fecha\": \"2025-05-20\",\n  \"tipoMovimiento\": \"DEPÓSITO\",\n  \"valor\": 600.0,\n  \"cuentaId\": 225487\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/movimientos",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "movimientos"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Movimiento DEPOSITO 495878",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fecha\": \"2025-05-20\",\n  \"tipoMovimiento\": \"DEPÓSITO\",\n  \"valor\": 150.0,\n  \"cuentaId\": 495878\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/movimientos",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "movimientos"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Movimiento RETIRO 496825",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fecha\": \"2025-05-20\",\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": -540.0,\n  \"cuentaId\": 496825\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/movimientos",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "movimientos"
-          ]
-        }
-      }
-    }
-  ]
+	"info": {
+		"_postman_id": "xxxx-xxxx-xxxx-xxxx",
+		"name": "API Banco",
+		"description": "Colección para probar la API de Banco",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET - Obtener todas las cuentas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cuentas",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cuentas"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Crear cuenta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"numeroCuenta\": \"495878\", \"tipoCuenta\": \"Ahorros\", \"saldo\": 0, \"estado\": true, \"clienteId\": 3}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuentas",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cuentas"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Crear movimiento RETIRO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"fecha\": \"2025-05-20\", \"tipoMovimiento\": \"RETIRO\", \"valor\": -575.0, \"cuentaId\": 2}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/movimientos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["movimientos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Crear movimiento DEPOSITO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"fecha\": \"2025-05-20\", \"tipoMovimiento\": \"DEPOSITO\", \"valor\": 100.0, \"cuentaId\": 2}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/movimientos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["movimientos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - Eliminar cliente",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/4",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["clientes", "4"]
+				}
+			},
+			"response": []
+		}
+	]
 }
